@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# List of target directories
+TARGET_DIRS=(
+  "/var/lib/rancid/router/backup/192.165.3.1"
+  "/var/lib/rancid/router/backup/192.165.4.1"
+)
+
+# Loop through each directory and clean up old files
+for DIR in "${TARGET_DIRS[@]}"; do
+  if [ -d "$DIR" ]; then
+    echo "Cleaning up directory: $DIR"
+    cd "$DIR" || exit
+    ls -t | tail -n +4 | xargs rm --
+  else
+    echo "Directory not found: $DIR"
+  fi
+done
